@@ -33,7 +33,7 @@
 
       $app->get('/edit_student/{id}', function($id) use ($app) {
          $student = Student::find($id);
-         $courses = $student->getCourses();
+         $courses = Course::getAll();
          return $app['twig']->render('edit_student.html.twig', array('student' => $student, 'courses' => $courses));
       });
 
@@ -52,12 +52,11 @@
       });
 
       $app->post('/enroll', function() use ($app) {
-         $course = new Course($_POST['course_name'], $_POST['course_number']);
-         $course->save();
+         $course = Course::find($_POST['courselist']);
          $student = Student::find($_POST['student_id']);
          $student->addCourse($course);
-         $courses = $student->getCourses();
-         return $app['twig']->render('edit_student.html.twig', array('student' => $student, 'courses' => $courses));
+         $student_courses = $student->getCourses();
+         return $app['twig']->render('edit_student.html.twig', array('student' => $student, 'student_courses' => $student_courses, 'courses' => Course::getAll()));
       });
 
       $app->post('/delete_students', function() use ($app) {

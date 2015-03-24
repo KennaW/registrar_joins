@@ -93,6 +93,14 @@
             return $courses;
         }
 
+        static function find($id)
+        {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$id};");
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $found_course = new Course($result['name'], $result['course_number'], $result['id']);
+            return $found_course;
+        }
+
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM courses *;");
