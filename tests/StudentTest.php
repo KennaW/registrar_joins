@@ -91,6 +91,20 @@
            //Assert
            $this->assertEquals(1, $result);
        }
+
+       function test_save() {
+           //Arrange
+           $name = "Wudge";
+           $enroll_date = "2015/01/01";
+           $test_student = new Student($name, $enroll_date);
+
+           //Act
+           $test_student->save();
+           $result = Student::getAll();
+
+           //Assert
+           $this->assertEquals([$test_student], $result);
+       }
    }
 
 ?>

@@ -49,8 +49,30 @@
 
         // DB functions
 
+        function save()
+        {
+            $statement = $GLOBALS['DB']->query("INSERT INTO students (name, enroll_date) VALUES ('{$this->getName()}', '{$this->getEnrollDate()}') RETURNING id;");
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $this->setId($result['id']);
+        }
+
 
         // static functions
+
+        static function getAll()
+        {
+            $returned_results = $GLOBALS['DB']->query("SELECT * FROM students;");
+            $students = [];
+
+            foreach($returned_results as $result) {
+                $name = $result['name'];
+                $enroll_date = $result['enroll_date'];
+                $id = $result['id'];
+                $new_student = new Student($name, $enroll_date, $id);
+                array_push($students, $new_student);
+            }
+            return $students;
+        }
     }
 
 ?>
