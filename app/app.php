@@ -33,6 +33,23 @@
          return $app['twig']->render('students.html.twig', array('students' => $students));
       });
 
+      $app->post('/add_course', function() use ($app) {
+         $new_course = new Course($_POST['name'], $_POST['course_number']);
+         $new_course->save();
+         $courses = Course::getAll();
+         return $app['twig']->render('courses.html.twig', array('courses' => $courses));
+      });
+
+      $app->get('/courses', function() use ($app) {
+          $courses = Course::getAll();
+          return $app['twig']->render('courses.html.twig', array('courses' => $courses));
+      });
+
+      $app->post('/delete_students', function() use ($app){
+         $students = Student::deleteAll();
+         return $app['twig']->render('students.html.twig', array('students' => $students));
+      });
+
       return $app;
 
 ?>

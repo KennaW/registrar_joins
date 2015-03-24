@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+        <link rel='stylesheet' href='css/styles.css'>
+        <title>University Registrrrrraaaarrrrr!!</title>
+    </head>
+    <body>
+        <div class='container'>
+            <h1>Course list:</h1>
+            <div class='row'>
+                <div class='col-md-6'>
+                    {% if courses is not empty %}
+                        {% for course in courses %}
+                            <ul>
+                                <li>Course name: {{ course.getName }} Course number: {{ course.getCourseNumber }}</li>
+                            </ul>
+                        {% endfor %}
+
+                    {% endif %}
+                </div>
+
+                <div class='col-md-6'>
+                    <h3>Add course:</h3>
+
+                    <form action='/add_course' method='post'>
+                        <div class='form-group'>
+                            <label for='name'>Name:</label>
+                            <input id='name' name='name' class='form-control' type='text'>
+                        </div>
+                        <div class='form-group'>
+                            <label for='course_number'>Course Number:</label>
+                            <input id='course_number' name='course_number' class='form-control' type='text'>
+                        </div>
+                        <button type='submit' class='btn'>Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
