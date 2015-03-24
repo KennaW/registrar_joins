@@ -97,7 +97,7 @@
         {
             $statement = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$id};");
             $result = $statement->fetch(PDO::FETCH_ASSOC);
-            $found_course = new Course($result['name'], $result['course_number'], $result['id']);
+            $found_course = new Course($result['course_name'], $result['course_number'], $result['id']);
             return $found_course;
         }
 
