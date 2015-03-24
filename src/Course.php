@@ -73,6 +73,11 @@
             }
             return $courses;
         }
+
+        static function deleteAll()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM courses *;");
+        }
     }
 
 

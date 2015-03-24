@@ -11,6 +11,10 @@
 
    class CourseTest extends PHPUnit_Framework_TestCase {
 
+       protected function tearDown() {
+           Course::deleteAll();
+       }
+
        function test_setName() {
            //Arrange
            $name = "History of the World Part 1";
@@ -104,6 +108,21 @@
 
            //Assert
            $this->assertEquals([$test_course], $result);
+       }
+
+       function test_deleteAll() {
+           //Arrange
+           $name = "History of the World Part 1";
+           $course_number = "HIST101";
+           $test_course = new Course($name, $course_number);
+           $test_course->save();
+
+           //Act
+           Course::deleteAll();
+           $result = Course::getAll();
+
+           //Assert
+           $this->assertEquals([], $result);
        }
 
 
