@@ -6,10 +6,16 @@
    */
 
    require_once "src/Student.php";
+   require_once "src/Course.php";
 
    $DB = new PDO('pgsql:host=localhost;dbname=registrar_test');
 
    class StudentTest extends PHPUnit_Framework_TestCase {
+
+       protected function tearDown() {
+           Course::deleteAll();
+           Student::deleteAll();
+       }
 
        function test_setName() {
            //Arrange
@@ -123,6 +129,26 @@
 
            //Assert
            $this->assertEquals([], $result);
+       }
+
+       function test_addCourse() {
+           //Arrange
+           $name = "Wudge";
+           $enroll_date = "2015/01/01";
+           $test_student = new Student($name, $enroll_date);
+           $test_student->save();
+
+           $course_name = "History 101";
+           $course_number = "HIST101";
+           $new_course = new Course($course_name, $course_number);
+           $new_course->save();
+
+           //Act
+           $test_student->addCourse($new_course);
+           $result = $test_student->getCourses();
+
+           //Assert
+           $this->assertEquals([$new_course], $result);
        }
    }
 
