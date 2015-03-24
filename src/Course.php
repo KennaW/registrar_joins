@@ -56,6 +56,25 @@
             $this->setId($result['id']);
         }
 
+        function addStudent($student)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO students_courses (student_id, course_id) VALUES ({$student->getId()}, {$this->getId()});");
+        }
+
+        function getStudents()
+        {
+            $returned_results = $GLOBALS['DB']->query("SELECT students.* FROM courses JOIN students_courses ON (courses.id = students_courses.course_id) JOIN students ON (students_courses.student_id = students.id) WHERE courses.id = {$this->getId()};");
+            $students = [];
+            foreach($returned_results as $result) {
+                $name = $result['name'];
+                $enroll_date = $result['enroll_date'];
+                $id = $result['id'];
+                $new_student = new Student($name, $enroll_date, $id);
+                array_push($students, $new_student);
+            }
+            return $students;
+        }
+
 
         // static functions
 
