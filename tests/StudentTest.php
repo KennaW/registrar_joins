@@ -105,6 +105,25 @@
            //Assert
            $this->assertEquals([$test_student], $result);
        }
+
+       function test_deleteAll() {
+           //Arrange
+           $name = "Wudge";
+           $enroll_date = "2015/01/01";
+           $test_student = new Student($name, $enroll_date);
+           $test_student->save();
+           $name2 = "Dwight";
+           $enroll_date2 = "2016/07/02";
+           $test_student2 = new Student($name2, $enroll_date2);
+           $test_student2->save();
+
+           //Act
+           Student::deleteAll();
+           $result = Student::getAll();
+
+           //Assert
+           $this->assertEquals([], $result);
+       }
    }
 
 ?>
