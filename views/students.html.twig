@@ -13,7 +13,7 @@
                     {% if students is not empty %}
                         {% for student in students %}
                             <ul>
-                                <li>Student name: {{ student.getName }} Enroll date: {{ student.getEnrollDate }}</li>
+                                <li>Student name: <a href='/edit_student/{{ student.getId }}'>{{ student.getName }}</a> Enroll date: {{ student.getEnrollDate }}</li>
                             </ul>
                         {% endfor %}
                         {% else %}

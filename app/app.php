@@ -26,6 +26,17 @@
          return $app['twig']->render('students.html.twig', array('students' => $students));
       });
 
+      $app->get('/courses', function() use ($app) {
+          $courses = Course::getAll();
+          return $app['twig']->render('courses.html.twig', array('courses' => $courses));
+      });
+
+      $app->get('/edit_student/{id}', function($id) use ($app) {
+         $student = Student::find($id);
+         $courses = $student->getCourses();
+         return $app['twig']->render('edit_student.html.twig', array('student' => $student, 'courses' => $courses));
+      });
+
       $app->post('/add_student', function() use ($app) {
          $new_student = new Student($_POST['name'], $_POST['enroll_date']);
          $new_student->save();
@@ -40,15 +51,28 @@
          return $app['twig']->render('courses.html.twig', array('courses' => $courses));
       });
 
-      $app->get('/courses', function() use ($app) {
-          $courses = Course::getAll();
-          return $app['twig']->render('courses.html.twig', array('courses' => $courses));
+      $app->post('/enroll', function() use ($app) {
+         $course = new Course($_POST['course_name'], $_POST['course_number']);
+         $course->save();
+         $student = Student::find($_POST['student_id']);
+         $student->addCourse($course);
+         $courses = $student->getCourses();
+         return $app['twig']->render('edit_student.html.twig', array('student' => $student, 'courses' => $courses));
       });
 
-      $app->post('/delete_students', function() use ($app){
+      $app->post('/delete_students', function() use ($app) {
          $students = Student::deleteAll();
          return $app['twig']->render('students.html.twig', array('students' => $students));
       });
+
+      $app->post('/delete_courses', function() use ($app) {
+         $courses = Course::deleteAll();
+         return $app['twig']->render('courses.html.twig', array('courses' => $courses));
+      });
+
+
+
+
 
       return $app;
 

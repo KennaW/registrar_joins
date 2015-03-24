@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+        <link rel='stylesheet' href='css/styles.css'>
+        <title>University Registrrrrraaaarrrrr!!</title>
+    </head>
+    <body>
+        <div class='container'>
+            <h1>{{ student.getName }}</h1>
+            <p>Enrolled on: {{ student.getEnrollDate }}</p>
+
+            {% if courses is not empty %}
+                <ul>
+                {% for course in courses %}
+                    <li>{{ course.getCourseNumber }} : {{ course.getName }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form action='/enroll' method='post'>
+                <input id='student_id' name='student_id' type='hidden' value='{{ student.getId }}'>
+                <div class='form-group'>
+                    <label for='course_name'>Enroll in new course:</label>
+                    <input id='course_name' name='course_name' class='form-control' type='text'>
+                </div>
+                <div class='form-group'>
+                    <label for='course_number'>Course number:</label>
+                    <input id='course_number' name='course_number' class='form-control' type='text'>
+                </div>
+                <button type='submit' class='btn'>Add course!</button>
+            </form>
+        </div>
+    </body>
+</html>

@@ -16,7 +16,8 @@
                                 <li>Course name: {{ course.getName }} Course number: {{ course.getCourseNumber }}</li>
                             </ul>
                         {% endfor %}
-
+                    {% else %}
+                        No courses!
                     {% endif %}
                 </div>
 
@@ -33,6 +34,9 @@
                             <input id='course_number' name='course_number' class='form-control' type='text'>
                         </div>
                         <button type='submit' class='btn'>Submit</button>
+                    </form>
+                    <form action='/delete_courses' method='post'>
+                        <button type='submit' class='bbtn btn-danger'>DELETE.</button>
                     </form>
                 </div>
             </div>

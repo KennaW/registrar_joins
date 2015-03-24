@@ -93,6 +93,14 @@
             return $students;
         }
 
+        static function find($id)
+        {
+            $statement = $GLOBALS['DB']->query("SELECT * FROM students WHERE id = {$id};");
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $found_student = new Student($result['name'], $result['enroll_date'], $result['id']);
+            return $found_student;
+        }
+
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM students *;");
